@@ -74,7 +74,7 @@
     articleView.setTeasers();
   };
 
-  Article.fetchAll(/* TODO: insert the proper function here */);
+  Article.fetchAll(articleView.renderIndexPage); ///* TODO: insert the proper function here */);
 
   module.articleView = articleView;
 })(window);

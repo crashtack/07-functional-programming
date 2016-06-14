@@ -24,10 +24,10 @@ Article.loadAll = function(dataWePassIn) {
   /* NOTE: the original forEach code should be refactored
      using `.map()` -  since what we are trying to accomplish is the
      transformation of one collection into another. */
-  dataWePassIn.sort(function(a,b) {
+  Article.allArticles = dataWePassIn.sort(function(a,b) {
     return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
-  }).forEach(function(ele) {
-    Article.allArticles.push(new Article(ele));
+  }).map(function(ele) {
+    return new Article(ele);
   });
 };
 
@@ -36,7 +36,7 @@ Article.loadAll = function(dataWePassIn) {
     we might want to call other view functions, and not just initIndexPage();
     Now instead of calling articleView.initIndexPage(), we can call
     whatever we pass in! */
-Article.fetchAll = function() {
+Article.fetchAll = function(nextFunction) {
   if (localStorage.hackerIpsum) {
     $.ajax({
       type: 'HEAD',
@@ -74,7 +74,7 @@ Article.numWordsAll = function() {
     return article.body.match(/\w+/g).length;
   })
   .reduce(function(a, b) {
-    // return (TODO: Sum up all the values!)
+    return a + b; //(TODO: Sum up all the values!)
   });
 };
 
@@ -93,7 +93,7 @@ Article.numWordsByAuthor = function() {
   /* TODO: Transform each author element into an object with 2 properties:
       One for the author's name, and one for the total number of words across
       the matching articles written by the specified author. */
-  return Article.allAuthors().map(function(a) { // 'a' is a reference to an individual author.
+  return Article.allAuthors().map(function(author) { // 'author' is a reference to an individual author.
     return {
       // name:
       // numWords: someCollection.filter(function(curArticle) {
