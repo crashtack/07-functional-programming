@@ -94,8 +94,9 @@
         What data type should this accumulator be and where is it placed? */
         .reduce(function(acc,cur,idx,arr) {
           if (!acc.includes(cur)) {
-            return acc.push(cur);
+            acc.push(cur);
           }
+          return acc;
         }, []);
   };
 
@@ -105,13 +106,24 @@
         the matching articles written by the specified author. */
     return Article.allAuthors().map(function(author) { // 'author' is a reference to an individual author.
       return {
-        // name:
-        // numWords: someCollection.filter(function(curArticle) {
+        name: author,
+        numWords: Article.allArticles.filter(function(curArticle) {
         //  what do we return here to check for matching authors?
-        // })
+          return curArticle.author === author;
+          // return curArticle.body.match(/\w+/g).length;
+          // }
+        })
+        .map(function(article) {
+          return article.body.match(/\w+/g).length;
+        })
+        .reduce(function(a, b) {
+          return a + b;
+        })
         // .map(...) // use .map to return the author's word count for each article's body (hint: regexp!).
         // .reduce(...) // squash this array of numbers into one big number!
       };
     });
   };
+
+  module.Article = Article;
 })(window);
