@@ -125,5 +125,39 @@
     });
   };
 
+
+  Article.allCategories = function() {
+    //return       TODO: map our collection
+    return Article.allArticles.map(function(article) {
+      //return    TODO: return just the author names;
+      return article.category;
+    })
+    /* TODO: For our `reduce` that we'll chain here -- since we are trying to
+        return an array, we'll need to specify an accumulator type...
+        What data type should this accumulator be and where is it placed? */
+        .reduce(function(acc,cur,idx,arr) {
+          if (!acc.includes(cur)) {
+            acc.push(cur);
+          }
+          return acc;
+        }, []);
+  };
+  Article.articlesByCategory = function() {
+    /* TODO: Transform each author element into an object with 2 properties:
+        One for the author's name, and one for the total number of words across
+        the matching articles written by the specified author. */
+    return Article.allCategories().map(function(category) { // 'author' is a reference to an individual author.
+      return {
+        category: category,
+        numArticles: Article.allArticles.filter(function(curArticle) {
+        //  what do we return here to check for matching authors?
+          return curArticle.category === category;
+        }).length
+        // .map(...) // use .map to return the author's word count for each article's body (hint: regexp!).
+        // .reduce(...) // squash this array of numbers into one big number!
+      };
+    });
+  };
+
   module.Article = Article;
 })(window);
