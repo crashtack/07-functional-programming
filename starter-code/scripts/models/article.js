@@ -85,7 +85,7 @@
             produce an array of *unique* author names. */
   Article.allAuthors = function() {
     //return       TODO: map our collection
-    return Article.allArticles.map(function(article) {
+    return Article.allArticles.map(function(article) {  // .map returns an array based on a function run on each cell (returns an array of author the same size of the original)
       //return    TODO: return just the author names;
       return article.author;
     })
@@ -97,7 +97,7 @@
             acc.push(cur);
           }
           return acc;
-        }, []);
+        }, []);  // <----- tell the .reduce to return an array
   };
 
   Article.numWordsByAuthor = function() {
